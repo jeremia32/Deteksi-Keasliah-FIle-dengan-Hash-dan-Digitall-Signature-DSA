@@ -71,45 +71,35 @@ Kunci Publik: File yang berisi kunci publik untuk verifikasi tanda tangan digita
 
 2. **Menjalankan Program**
 Pastikan Anda Sudah Menginstal Dependensi Program membutuhkan beberapa pustaka Python. Jalankan perintah berikut untuk menginstal dependensi:
-```bash
 pip install flask cryptography  
 
-Jalankan Server Flask Jalankan program dengan perintah berikut:
-```bash
-pip install flask cryptography 
-
-5. **Generate private key** dengan perintah:
-
-   ```bash
-   openssl genrsa -out private_key.pem 2048
-
-6. **Generate public key** dengan perintah:
-   ```bash
-   openssl rsa -in private_key.pem -pubout -out public_key.pem
-7. **Simpan keys tersebut dalam folder keys.**
-8. Simpan file yang akan diberi signature dan diuji keasliannya dalam folder file.
-9. Simpan signature di folder signature, seperti struktur folder pada repositori ini.
-
-## **Menjalankan Program di Mode Pengirim (Sender Mode)**
-
-Untuk menjalankan program di **mode pengirim**, gunakan perintah berikut:
-
-```bash
-python app.py --mode sender --file path/to/your/file.txt --private-key path/to/private_key.pem --signature path/to/signature.sig
-
-contoh:
-python app.py --mode sender --file file/test.txt --private-key keys/private_key.pem --signature signature/signature.sig 
-
---mode sender: Menentukan mode untuk pengirim yang menghasilkan tanda tangan.
---file path/to/your/file.txt: Menunjukkan file yang akan diberikan tanda tangan.
---private-key path/to/private_key.pem: Menunjukkan path ke private key yang digunakan untuk menandatangani.
---signature path/to/signature.sig: Menunjukkan path tempat menyimpan signature yang dihasilkan.
+3. Jalankan Server Flask Jalankan program dengan perintah berikut:
+    ```bash
+   python app.py
 
 
-## **Menjalankan Program di Mode penerima (receiver Mode)**
-```bash
-python app.py --mode receiver --file path/to/your/file.txt --public-key path/to/public_key.pem --signature path/to/signature.sig
+4. ** Mengunggah File untuk Verifikasi ** dengan perintah:
 
-![Screenshot 2024-11-26 115903](https://github.com/user-attachments/assets/0771c479-e583-465e-93e9-0106779ab12f)
+ Isi Formulir di Halaman Utama Anda akan melihat formulir dengan tiga bidang unggahan:
 
+File: Unggah file asli.
+Tanda Tangan: Unggah file tanda tangan digital yang sesuai.
+Kunci Publik: Unggah file kunci publik untuk proses verifikasi.
+Klik Tombol "Verify" Setelah mengisi semua bidang, klik tombol "Verify" untuk memulai proses verifikasi 
+
+
+## **Kesimpulan** ##
+Program ini memanfaatkan hashing dan RSA untuk memastikan file yang diterima tidak dimodifikasi dan berasal dari pengirim yang sah. Hal ini sangat berguna dalam menjaga keamanan file dalam pengiriman digital.
+
+
+
+## **Kontribusi** ##
+tim yang berkontribusi dalam membuat sistem ini terdiri dari :
+syahrial jeremia sinaga -11422045 
+Veri Marsil Marpaung -11422014
+Diva Marchelliny Napitupulu -11422054
+
+## **kontak** ##
+
+Jika Anda memiliki pertanyaan atau saran, jangan ragu untuk menghubungi saya melalui email syahrialjsinaga@gmail.com
 
