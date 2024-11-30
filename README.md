@@ -1,18 +1,17 @@
-# Proyek Hash dan DSA: Verifikasi Keaslian File
+# Proyek Verifikasi Keaslian File dengan RSA dan SHA-256
 
-## **Alur Penggunaan Hash dan DSA dalam Proyek**
+## **Alur Verifikasi Keaslian File**
 
 ### **1. Pengirim (Sender Mode)**
-
-1. Pengirim pertama kali menghasilkan **hash** dari file menggunakan fungsi `generate_file_hash()`.
-2. Kemudian, pengirim **menandatangani hash** tersebut menggunakan **private key** dengan fungsi `sign_file()`.
-3. Tanda tangan digital (**signature**) disimpan dalam file dan dikirimkan bersama file asli kepada penerima.
+1.Pengirim pertama-tama menghitung hash dari file menggunakan fungsi generate_file_hash().
+2.Tanda tangan digital (signature) dihasilkan dengan menandatangani hash menggunakan private key melalui fungsi sign_file().
+3.Pengirim mengirimkan file asli dan file tanda tangan digital kepada penerima.
 
 ### **2. Penerima (Receiver Mode)**
 
-1. Penerima pertama kali menghitung **hash** dari file yang diterima menggunakan fungsi `generate_file_hash()`.
-2. Penerima kemudian **memverifikasi tanda tangan digital** menggunakan **public key** dengan fungsi `verify_signature()`.
-3. Penerima membandingkan **hash** yang dihitung dengan yang ada pada tanda tangan. Jika tanda tangan dan hash cocok, maka file diterima sebagai asli.
+1.Penerima menghitung ulang hash dari file yang diterima menggunakan fungsi generate_file_hash().
+2.Tanda tangan diverifikasi menggunakan public key dengan fungsi verify_signature().
+3.Jika tanda tangan dan hash cocok, file diterima sebagai asli dan tidak dimodifikasi.
 
 ---
 
@@ -34,27 +33,62 @@
 
 ## **Persyaratan Sistem**
 
-Sebelum menggunakan program ini, pastikan Anda sudah menginstal **OpenSSL**. Biasanya, OpenSSL sudah terpasang secara default pada sistem Linux.
+1.Python 3.8+.
+2. Pustaka Python berikut:
+Flask
+cryptography
+
+3. Folder dengan struktur berikut:
+Deteksi-Keaslian-File/
+├── app.py
+├── app_logic.py
+├── templates/
+│   └── index.html
+├── static/
+├── files/
+├── signatures/
+├── keys/
+│   ├── private_key.pem
+│   ├── public_key.pem
 
 ---
+## Digital Signature Verification Program ##
+Program ini adalah aplikasi berbasis web menggunakan Flask untuk memverifikasi keaslian file melalui tanda tangan digital. Program ini mendukung algoritma RSA dan hashing SHA-256 untuk memastikan integritas dan keaslian file.
+
+
+
 
 ## **Cara Menggunakan Program**
 
 ### **Langkah-langkah untuk Menggunakan Program**
 
-1. **Buka Terminal Linux.**
+1. **Persiapan File.**
+Sebelum menggunakan program, pastikan Anda memiliki file berikut:
 
-2. **Generate private key** dengan perintah:
+File Asli: File yang ingin diverifikasi tanda tangannya.
+Tanda Tangan Digital: File tanda tangan digital dari file asli.
+Kunci Publik: File yang berisi kunci publik untuk verifikasi tanda tangan digital.
+
+2. **Menjalankan Program**
+Pastikan Anda Sudah Menginstal Dependensi Program membutuhkan beberapa pustaka Python. Jalankan perintah berikut untuk menginstal dependensi:
+```bash
+pip install flask cryptography  
+
+Jalankan Server Flask Jalankan program dengan perintah berikut:
+```bash
+pip install flask cryptography 
+
+5. **Generate private key** dengan perintah:
 
    ```bash
    openssl genrsa -out private_key.pem 2048
 
-3. **Generate public key** dengan perintah:
+6. **Generate public key** dengan perintah:
    ```bash
    openssl rsa -in private_key.pem -pubout -out public_key.pem
-4. **Simpan keys tersebut dalam folder keys.**
-5. Simpan file yang akan diberi signature dan diuji keasliannya dalam folder file.
-6. Simpan signature di folder signature, seperti struktur folder pada repositori ini.
+7. **Simpan keys tersebut dalam folder keys.**
+8. Simpan file yang akan diberi signature dan diuji keasliannya dalam folder file.
+9. Simpan signature di folder signature, seperti struktur folder pada repositori ini.
 
 ## **Menjalankan Program di Mode Pengirim (Sender Mode)**
 
