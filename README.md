@@ -71,14 +71,14 @@ Kunci Publik: File yang berisi kunci publik untuk verifikasi tanda tangan digita
 
 2. **Menjalankan Program**
 Pastikan Anda Sudah Menginstal Dependensi Program membutuhkan beberapa pustaka Python. Jalankan perintah berikut untuk menginstal dependensi:
-pip install flask cryptography  
-
-3. Jalankan Server Flask Jalankan program dengan perintah berikut:
+    ```bash
+   pip install flask cryptography
+4. Jalankan Server Flask Jalankan program dengan perintah berikut:
     ```bash
    python app.py
 
 
-4. ** Mengunggah File untuk Verifikasi ** dengan perintah:
+5.  **Mengunggah File untuk Verifikasi** 
 
  Isi Formulir di Halaman Utama Anda akan melihat formulir dengan tiga bidang unggahan:
 
