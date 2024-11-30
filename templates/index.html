@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Signature App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Digital Signature Application</h1>
+
+      <!-- Form untuk memilih mode -->
+      <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="mode">Mode:</label>
+        <select name="mode" id="mode" required>
+          <option value="sender">Sender (Generate Signature)</option>
+          <option value="receiver">Receiver (Verify Signature)</option>
+        </select>
+
+        <!-- Input file -->
+        <label for="file">File:</label>
+        <input type="file" name="file" id="file" required />
+
+        <!-- Input khusus untuk mode sender -->
+        <div id="sender-fields">
+          <label for="private_key">Private Key (Sender Mode):</label>
+          <input type="file" name="private_key" id="private_key" />
+        </div>
+
+        <!-- Input khusus untuk mode receiver -->
+        <div id="receiver-fields" style="display: none">
+          <label for="public_key">Public Key (Receiver Mode):</label>
+          <input type="file" name="public_key" id="public_key" />
+          <label for="signature">Signature File (Receiver Mode):</label>
+          <input type="file" name="signature" id="signature" />
+        </div>
+
+        <button type="submit">Process</button>
+      </form>
+
+      <!-- Div untuk hasil proses -->
+      <div id="result"></div>
+    </div>
+
+    <!-- Bagian untuk Generate Keys -->
+    <div>
+      <h3>Generate Private and Public Keys</h3>
+      <button id="generate-keys-btn" onclick="generateKeys()">Generate Keys</button>
+      <div id="key-status"></div>
+    </div>
+
+    <script>
+      // Mengatur visibilitas input berdasarkan mode
+      document.getElementById("mode").addEventListener("change", function () {
+        const mode = this.value;
+        document.getElementById("sender-fields").style.display = mode === "sender" ? "block" : "none";
+        document.getElementById("receiver-fields").style.display = mode === "receiver" ? "block" : "none";
+      });
+      document.getElementById("mode").dispatchEvent(new Event("change"));
+
+      // Fungsi untuk Generate Keys
+      function generateKeys() {
+        fetch("/generate-keys", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => {
+            const status = data.error
+              ? `Error: ${data.error}`
+              : `Keys generated! 
+                 Private Key: ${data.private_key_path}, 
+                 Public Key: ${data.public_key_path}`;
+            document.getElementById("key-status").innerText = status;
+          })
+          .catch((error) => {
+            document.getElementById("key-status").innerText = `Error: ${error}`;
+          });
+      }
+    </script>
+  </body>
+</html>
